@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Login = () => {
   const handleLogin = () => {};
   return (
@@ -42,14 +44,17 @@ const Login = () => {
                     >
                       Login
                     </button>
-                    <a href="#" className="text-sm hover:underline">
+                    <Link
+                      to="/forgot-password"
+                      className="text-sm hover:underline"
+                    >
                       Forgot password?
-                    </a>
+                    </Link>
                   </div>
                   <div className="mt-3 my-1 text-center mx-3 font-semibold">
                     Or
                   </div>
-                  
+
                   <div className="text-center">
                     <button
                       className="px-4 py-3 mt-4 mr-1 text-black font-medium bg-gray-200 rounded-lg hover:bg-black hover:text-white transition ease-linear duration-00"
