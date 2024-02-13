@@ -1,6 +1,7 @@
 import {
   createContext,
   useCallback,
+  useContext,
   useEffect,
   useMemo,
   useState,
@@ -16,14 +17,13 @@ export interface AuthContextValue {
   logout: () => Promise<void>;
 }
 
-// interface AuthContextType {
-//   authContext: AuthContextValue;
-//   setAuthContext: (value: AuthContextValue) => void;
-// }
+type AuthProviderProps = {
+  children: React.JSX.Element[];
+};
 
-export const AuthContext = createContext<AuthContextValue | null>(null);
+const AuthContext = createContext<AuthContextValue>({} as AuthContextValue);
 
-export const AuthProvider = ({ children }: { children: React.JSX.Element }) => {
+export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [isAuthen, setIsAuthen] = useState(false);
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
@@ -34,20 +34,19 @@ export const AuthProvider = ({ children }: { children: React.JSX.Element }) => {
       console.log(res);
 
       if (res.status === 200) {
-        setEmail(res.data.email);
         setIsAuthen(true);
         navigate("/user");
       }
     } catch (error) {
       console.log(error);
-      navigate("/");
     }
   };
 
   const logout = async () => {
     try {
-      const res = await axiosInstance.post("/user/logout");
+      const res = await axiosInstance.get("/user/logout");
       console.log(res);
+      
       if (res.status === 200) {
         setIsAuthen(false);
         navigate("/");
@@ -62,9 +61,10 @@ export const AuthProvider = ({ children }: { children: React.JSX.Element }) => {
   const handleLogin = useCallback(async (): Promise<void> => {
     try {
       const res = await axiosInstance.get("/user/me");
+      console.log(res);
 
       if (res.status === 200) {
-        setEmail(res.data.email);
+        setEmail(res.data.data.email);
         setIsAuthen(true);
       }
     } catch (err) {
@@ -91,5 +91,5 @@ export const AuthProvider = ({ children }: { children: React.JSX.Element }) => {
 };
 
 export const useAuth = () => {
-  return createContext(AuthContext);
+  return useContext(AuthContext);
 };
