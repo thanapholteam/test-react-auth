@@ -26,7 +26,7 @@ const ForgetForm: React.FC<Props> = ({
               onChange={(e) => {
                 setValue(e.target.value);
               }}
-              className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-red-600"
+              className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
               required
             />
           </label>
@@ -34,7 +34,7 @@ const ForgetForm: React.FC<Props> = ({
       </div>
       <div className="text-center">
         <button
-          className="px-6 py-2 mt-4 text-white font-semibold bg-red-600 rounded-lg hover:bg-black hover:text-white transition ease-linear duration-200"
+          className="px-6 py-2 mt-4 text-white font-semibold bg-emerald-600 rounded-lg hover:bg-black hover:text-white transition ease-linear duration-200"
           type="submit"
           disabled={loading}
         >

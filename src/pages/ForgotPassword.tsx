@@ -48,7 +48,7 @@ const ForgotPassword = () => {
     setLoading(true);
     event.preventDefault();
     if (newPassword) {
-      const res = await axiosInstance.post("/user/reset", {
+      const res = await axiosInstance.post("/user/reset-password/", {
         email: email,
         id: url,
         password: newPassword,
@@ -65,57 +65,31 @@ const ForgotPassword = () => {
 
   return (
     <div className="flex flex-col justify-center items-center">
-      <h1 className="text-3xl">Forgot Password</h1>
-      <ForgetForm
-        name="email"
-        handleSubmit={handleSubmitEmail}
-        setValue={setEmail}
-        loading={loading}
-      />
-      {url !== "" ? (
+      <div className="px-12 py-6 mt-4 text-left bg-white rounded-xl border border-black shadow-lg">
+        <h1 className="text-2xl font-bold mt-3">Forgot Password</h1>
         <ForgetForm
-          name="OTP"
-          handleSubmit={handleSubmitOTP}
-          setValue={setOtp}
+          name="email"
+          handleSubmit={handleSubmitEmail}
+          setValue={setEmail}
           loading={loading}
         />
-      ) : null}
-      {isOTPVefified ? (
-        <ForgetForm
-          name="newPassword"
-          handleSubmit={handleChangePassword}
-          setValue={setNewPassword}
-          loading={loading}
-        />
-      ) : null}
-      {/* <form onSubmit={(e) => handleSubmitEmail(e)}>
-        <div className="mt-4">
-          <label className="block font-medium">
-            Email
-            <label>
-              <input
-                type="text"
-                placeholder="Email"
-                name="email"
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
-                className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-red-600"
-                required
-              />
-            </label>
-          </label>
-        </div>
-        <div className="text-center">
-          <button
-            className="px-6 py-2 mt-4 text-white font-semibold bg-red-600 rounded-lg hover:bg-black hover:text-white transition ease-linear duration-200"
-            type="submit"
-            disabled={loading}
-          >
-            Send Email
-          </button>
-        </div>
-      </form> */}
+        {url === "" ? (
+          <ForgetForm
+            name="OTP"
+            handleSubmit={handleSubmitOTP}
+            setValue={setOtp}
+            loading={loading}
+          />
+        ) : null}
+        {!isOTPVefified ? (
+          <ForgetForm
+            name="newPassword"
+            handleSubmit={handleChangePassword}
+            setValue={setNewPassword}
+            loading={loading}
+          />
+        ) : null}
+      </div>
     </div>
   );
 };
