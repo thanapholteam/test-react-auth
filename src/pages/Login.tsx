@@ -29,8 +29,8 @@ const Login = () => {
       <div className="flex flex-col items-center justify-center">
         <div className="flex-grow">
           <div className="flex items-center justify-center">
-            <div className="px-8 py-6 mt-4 text-left bg-white rounded-xl border-2 border-black shadow-lg">
-              <h3 className="text-2xl font-bold text-center mt-3">Sign In</h3>
+            <div className="px-12 py-6 mt-4 text-left bg-white rounded-xl border border-black shadow-lg">
+              <h3 className="text-2xl font-bold mt-3">Sign in to your account</h3>
               <form onSubmit={(e) => handleLogin(e)}>
                 <div className="mt-4">
                   <label className="block font-medium">
@@ -38,12 +38,12 @@ const Login = () => {
                     <label>
                       <input
                         type="email"
-                        placeholder="Email"
+                        placeholder="name@mail.com"
                         name="email"
                         onChange={(e) => {
                           onFormChange(e);
                         }}
-                        className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-red-600"
+                        className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
                         required
                       />
                     </label>
@@ -56,29 +56,39 @@ const Login = () => {
                       <input
                         type="password"
                         name="password"
-                        placeholder="Password"
+                        placeholder="••••••••"
                         onChange={(e) => {
                           onFormChange(e);
                         }}
-                        className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-red-600"
+                        className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
                         required
                       />
                     </label>
                   </label>
                 </div>
-                <div className="flex items-baseline justify-between my-1">
+                <div className="mt-3 flex justify-end">
+                    <Link
+                    to="/forgot-password"
+                    className="text-sm italic hover:underline "
+                  >
+                    Forgot password?
+                  </Link>
+                </div>
+                <div className="flex items-baseline justify-center my-1">
                   <button
-                    className="px-6 py-2 mt-4 text-white font-semibold bg-red-600 rounded-lg hover:bg-black hover:text-white transition ease-linear duration-200"
+                    className="px-10 py-2 mt-4 text-white font-semibold bg-emerald-600 rounded-lg hover:bg-black hover:text-white transition ease-linear duration-200"
                     type="submit"
-                    // onClick={handleLogin}
                   >
                     Login
                   </button>
-                  <Link
-                    to="/forgot-password"
-                    className="text-sm hover:underline"
+                </div>
+                <div className="mt-3 flex flex-row items-center justify-start text-sm">
+                    Don't have an account yet?
+                    <Link
+                    to="/register"
+                    className="hover:underline text-blue-600 font-semibold mx-1"
                   >
-                    Forgot password?
+                    Sign up
                   </Link>
                 </div>
               </form>
