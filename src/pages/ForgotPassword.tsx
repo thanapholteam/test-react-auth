@@ -73,7 +73,7 @@ const ForgotPassword = () => {
           setValue={setEmail}
           loading={loading}
         />
-        {url === "" ? (
+        {url !== "" ? (
           <ForgetForm
             name="OTP"
             handleSubmit={handleSubmitOTP}
@@ -81,7 +81,7 @@ const ForgotPassword = () => {
             loading={loading}
           />
         ) : null}
-        {!isOTPVefified ? (
+        {isOTPVefified ? (
           <ForgetForm
             name="newPassword"
             handleSubmit={handleChangePassword}
