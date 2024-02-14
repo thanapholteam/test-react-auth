@@ -76,12 +76,13 @@ const Login = () => {
                 </div>
                 <div className="flex items-baseline justify-center my-1">
                   <button
-                    className="px-10 py-2 mt-4 text-white font-semibold bg-emerald-600 rounded-lg hover:bg-black hover:text-white transition ease-linear duration-200"
+                    className="w-full py-2 mt-4 text-white font-semibold bg-emerald-600 rounded-lg hover:bg-black hover:text-white transition ease-linear duration-200"
                     type="submit"
                   >
                     Login
                   </button>
                 </div>
+                <hr className="my-6"/>
                 <div className="mt-3 flex flex-row items-center justify-start text-sm">
                     Don't have an account yet?
                     <Link
