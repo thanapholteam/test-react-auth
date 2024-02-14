@@ -4,7 +4,7 @@ const Home = () => {
   return (
     <div className="flex flex-col justify-between">
       {/* HERO */}
-        <div className="flex flex-col items-center p-32">
+        <div className="flex flex-col items-center p-36 text-center">
           <img className="w-[200px] animate-fade-up" src="./images/lock_logo.png"></img>
           <h1 className="text-5xl text-blue-500 font-bold my-5 animate-fade-up animate-delay-500">Authentication Prototype</h1>
           <h2 className="text-lg font-medium text-gray-700">A web application with two-factor authentication service</h2>
