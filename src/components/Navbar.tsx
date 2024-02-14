@@ -13,8 +13,8 @@ const Navbar: React.FC = () => {
 
   const navbarList = [
     { name: "Home", path: "/", must_login: false },
-    { name: "login", path: "/login", must_login: false },
-    { name: "register", path: "/register", must_login: false },
+    { name: "Login", path: "/login", must_login: false },
+    { name: "Register", path: "/register", must_login: false },
     { name: email, path: "/user", must_login: true },
   ];
 
