@@ -41,7 +41,14 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         MySwal.fire({
           icon: "success",
           title: "Login Success",
-          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+      else if(res.status === 204){
+        MySwal.fire({
+          icon: "error",
+          title: "Something went wrong!",
+          text: "Could not find your account.",
           timer: 1500,
         });
       }
@@ -49,9 +56,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       console.log(error);
       MySwal.fire({
         icon: "error",
-        title: "email or password is incorrect",
-        showConfirmButton: false,
-        timer: 1300,
+        title: "Something went wrong!",
+        text:"Email or password is incorrect.",
+        timer: 1500,
       });
     }
   };
