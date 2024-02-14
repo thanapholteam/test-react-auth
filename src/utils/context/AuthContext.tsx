@@ -8,12 +8,14 @@ import {
 } from "react";
 import { useNavigate } from "react-router-dom";
 import { axiosInstance } from "../Axios";
-import { LoginPayload } from "@/types/payload";
+import { LoginPayload, RegisterPayload } from "@/types/payload";
+import { MySwal } from "../Swal";
 
 export interface AuthContextValue {
   email: string;
   isAuthen: boolean;
   login: (data: LoginPayload) => Promise<void>;
+  register: (data: RegisterPayload) => Promise<void>;
   logout: () => Promise<void>;
 }
 
@@ -36,6 +38,36 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       if (res.status === 200) {
         setIsAuthen(true);
         navigate("/user");
+        MySwal.fire({
+          icon: "success",
+          title: "Login Success",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      MySwal.fire({
+        icon: "error",
+        title: "email or password is incorrect",
+        showConfirmButton: false,
+        timer: 1300,
+      });
+    }
+  };
+
+  const register = async (data: RegisterPayload) => {
+    try {
+      const res = await axiosInstance.post("/user/register", data);
+      console.log(res);
+
+      if (res.status === 201) {
+        MySwal.fire({
+          icon: "success",
+          title: "Register Success",
+          showConfirmButton: false,
+          timer: 2000,
+        }).then(() => navigate("/login"));
       }
     } catch (error) {
       console.log(error);
@@ -45,8 +77,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const logout = async () => {
     try {
       const res = await axiosInstance.get("/user/logout");
-      console.log(res);
-      
+
       if (res.status === 200) {
         setIsAuthen(false);
         navigate("/");
@@ -81,6 +112,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       email,
       isAuthen,
       login,
+      register,
       logout,
     };
   }, [isAuthen]);

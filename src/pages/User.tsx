@@ -5,6 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 const User = () => {
   const { logout } = useAuth();
   const [user, setUser] = useState(null);
+
   const handleGetUser = useCallback(async (): Promise<void> => {
     try {
       const res = await axiosInstance.get("/user/me");
