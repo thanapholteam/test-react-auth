@@ -19,10 +19,14 @@ const Navbar: React.FC = () => {
   ];
 
   return (
-    <nav className="bg-[#0A2468] border-gray-200 sticky top-0 z-50">
+    <nav className="bg-[#0b1940] border-gray-200 sticky top-0 z-50">
       <div className="min-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <Link to="/" className="pl-3 md:text-2xl text-white font-bold">
-          <h1>Login Sample</h1>
+          <div className="flex items-center gap-2">
+            <img className="w-[30px] inline" src="./images/lock_logo.png"></img>
+            <h1>Auth Prototype</h1>
+          </div>
+          
         </Link>
 
         {/* NavList */}
