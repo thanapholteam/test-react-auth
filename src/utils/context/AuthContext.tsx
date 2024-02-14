@@ -78,6 +78,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       }
     } catch (error) {
       console.log(error);
+      MySwal.fire({
+        icon: "error",
+        title: "Something went wrong!",
+        text: "This email address is already used by another.",
+        timer: 1500,
+      });
     }
   };
 
