@@ -5,6 +5,7 @@ type Props = {
   handleSubmit: (event: React.FormEvent<HTMLFormElement>) => Promise<void>;
   setValue: (value: React.SetStateAction<string>) => void;
   loading: boolean;
+  btnName?: string;
 };
 
 const ForgetForm: React.FC<Props> = ({
@@ -12,6 +13,7 @@ const ForgetForm: React.FC<Props> = ({
   handleSubmit,
   setValue,
   loading,
+  btnName
 }) => {
   return (
     <form onSubmit={(e) => handleSubmit(e)}>
@@ -38,7 +40,7 @@ const ForgetForm: React.FC<Props> = ({
           type="submit"
           disabled={loading}
         >
-          Submit
+          {btnName ? btnName : "Submit"}
         </button>
       </div>
     </form>
