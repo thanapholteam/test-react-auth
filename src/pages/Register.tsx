@@ -41,8 +41,8 @@ const Register = () => {
   return (
     <div className="bg-[url('images/bg.jpeg')] bg-center bg-cover bg-repeat">
     <div className="flex flex-col items-center justify-center backdrop-blur-md px-6 py-8 mx-auto md:h-screen lg:py-0">
-        <div className="w-full p-6 bg-white rounded-lg shadow border md:mt-0 sm:max-w-md sm:p-8">
-          <h3 className="text-2xl font-bold mt-3">Create an account</h3>
+        <div className="w-full p-6 bg-white rounded-lg shadow border md:mt-0 sm:max-w-md sm:p-8 animate-fade-up">
+          <h3 className="text-2xl font-bold mt-3 animate-fade-up animate-delay-100">Create an account</h3>
           <form onSubmit={(e) => handleRegister(e)}>
             <div className="mt-4">
               <label className="block font-medium">
