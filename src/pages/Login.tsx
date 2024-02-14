@@ -57,6 +57,7 @@ const Login = () => {
                         type="password"
                         name="password"
                         placeholder="••••••••"
+                        minLength={8}
                         onChange={(e) => {
                           onFormChange(e);
                         }}

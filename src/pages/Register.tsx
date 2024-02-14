@@ -65,6 +65,7 @@ const Register = () => {
                       type="password"
                       name="password"
                       placeholder="••••••••"
+                      minLength={8}
                       onChange={onFormChange}
                       className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
                       required
@@ -80,6 +81,7 @@ const Register = () => {
                     <input
                       type="password"
                       placeholder="••••••••"
+                      minLength={8}
                       className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
                       onChange={(e) => {
                         setConfirmPass(e.target.value);
