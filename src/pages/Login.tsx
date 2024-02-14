@@ -29,7 +29,7 @@ const Login = () => {
       <div className="flex flex-col items-center justify-center">
         <div className="flex-grow">
           <div className="flex items-center justify-center">
-            <div className="px-12 py-6 mt-4 text-left bg-white rounded-xl border border-black shadow-lg">
+            <div className="px-12 py-6 mt-4 text-left bg-white rounded-xl border shadow-lg">
               <h3 className="text-2xl font-bold mt-3">Sign in to your account</h3>
               <form onSubmit={(e) => handleLogin(e)}>
                 <div className="mt-4">

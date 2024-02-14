@@ -1,4 +1,4 @@
-import ForgetForm from "@/components/ForgetPassword/ForgetForm";
+// import ForgetForm from "@/components/ForgetPassword/ForgetForm";
 import { axiosInstance } from "@/utils/Axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -10,10 +10,29 @@ const ForgotPassword = () => {
   const [loading, setLoading] = useState(false);
   const [url, setUrl] = useState("");
   const [otp, setOtp] = useState("");
-  // const [isOTPVefified, setIsOTPVefified] = useState(false);
+  const [isOTPVefified, setIsOTPVefified] = useState(false);
   const [newPassword, setNewPassword] = useState("");
-  const [page, setPage] = useState(1);
+  const [renewPassword, setReNewPassword] = useState("");
+  const [errEmail, setErrEmail] = useState(true);
+  const [errPassword, setErrPassword] = useState(true);
+  // const [errOtp, setErrOtp] = useState(true);
 
+  const checkPassword = (value: string) => {
+    const regEx =
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+    return regEx.test(value);
+  };
+
+  const checkEmail = () => {
+    const regEx =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return regEx.test(email);
+  };
+
+  // const checkOtp = () => {
+  //   const regEx = new RegExp("^[0-9]+$");
+  //   return regEx.test(otp);
+  // };
   const handleSubmitEmail = async (event: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
     event.preventDefault();
@@ -22,8 +41,16 @@ const ForgotPassword = () => {
       console.log(res);
       if (res.status === 201) {
         setUrl(res.data.url);
-        setPage(2);
+      } else if (res.status === 204) {
+        MySwal.fire({
+          icon: "error",
+          title: "Something went wrong!",
+          text: "Could not find your account.",
+          showConfirmButton: true,
+          timer: 2000,
+        });
       }
+      // For other status code like 400, 404, 500
       setLoading(false);
     }
     setLoading(false);
@@ -40,8 +67,15 @@ const ForgotPassword = () => {
       });
       console.log(res);
       if (res.status === 201) {
-        // setIsOTPVefified(true);
-        setPage(3)
+        setIsOTPVefified(true);
+      } else if (res.status === 204) {
+        MySwal.fire({
+          icon: "error",
+          title: "Something went wrong!",
+          text: "the OTP code is invalid.",
+          showConfirmButton: true,
+          timer: 2000,
+        });
       }
       setLoading(false);
     }
@@ -58,19 +92,17 @@ const ForgotPassword = () => {
         email: email,
         id: url,
         newPassword: newPassword,
+        code: otp,
       });
+
       console.log(res);
       if (res.status === 201) {
-        // setIsOTPVefified(true); redirect to login
-        //TODO : Sweetalert
-      //  navigate("/login")
-       MySwal.fire({
-        icon: "success",
-        title: "Register Success",
-        showConfirmButton: false,
-        timer: 2000,
-      }).then(() => navigate("/login"));
-
+        MySwal.fire({
+          icon: "success",
+          title: "Success",
+          showConfirmButton: false,
+          timer: 2000,
+        }).then(() => navigate("/login"));
       }
       setLoading(false);
     }
@@ -78,39 +110,173 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center">
-      <div className="px-12 py-6 mt-4 text-left bg-white rounded-xl border border-black shadow-lg">
-        <h1 className="text-2xl font-bold mt-3">Forgot Password</h1>
-        <hr className="my-3" />
-        {page === 1 ? (
-          <ForgetForm
-            name="Email"
-            handleSubmit={handleSubmitEmail}
-            setValue={setEmail}
-            loading={loading}
-            btnName={"Continue"}
-          />
-        ) : null}
-        {page === 2 ? (
-          <div>
-            <ForgetForm
-              name="OTP"
-              handleSubmit={handleSubmitOTP}
-              setValue={setOtp}
-              loading={loading}
-            />
+    <div>
+      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+        <div className="w-full p-6 bg-white rounded-lg shadow border md:mt-0 sm:max-w-md sm:p-8">
+          <h2 className="mb-1 text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
+            Forgot Password
+          </h2>
+          <div className="mt-4 space-y-4 lg:mt-5 md:space-y-5">
+            <form onSubmit={(e) => handleSubmitEmail(e)}>
+              <div className="grid grid-cols-12 gap-4 items-end">
+                <div className="col-span-8">
+                  <label
+                    htmlFor="email"
+                    className="block mb-2 text-sm font-medium text-gray-900 "
+                  >
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      setErrEmail(checkEmail());
+                    }}
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 disabled:bg-slate-200"
+                    placeholder="test@mail.com"
+                    disabled={url.length > 0 || loading}
+                  />
+                </div>
+                <div className="col-span-4">
+                  <button
+                    className="w-full px-3 py-2 mx-3 mt-4 text-white font-semibold bg-emerald-600 rounded-lg hover:bg-emerald-700 hover:text-white transition ease-linear duration-200 disabled:opacity-40 "
+                    type="submit"
+                    disabled={url.length > 0 || loading}
+                  >
+                    Send OTP
+                  </button>
+                </div>
+              </div>
+            </form>
+            {!errEmail ? (
+              <p className="text-sm text-red-700">
+                Please use a valid email address.
+              </p>
+            ) : (
+              ""
+            )}
+            {url ? (
+              <div>
+                <form onSubmit={(e) => handleSubmitOTP(e)}>
+                  <div className="grid grid-cols-12 gap-4 items-end">
+                    <div className="col-span-8">
+                      <label
+                        htmlFor="email"
+                        className="block mb-2 text-sm font-medium text-gray-900 "
+                      >
+                        OTP
+                      </label>
+                      <input
+                        type="text"
+                        name="otp"
+                        id="otp"
+                        maxLength={6}
+                        minLength={6}
+                        onChange={(e) => {
+                          setOtp(e.target.value);
+                        }}
+                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 disabled:bg-slate-200"
+                        placeholder="••••••"
+                        disabled={!url || loading || isOTPVefified}
+                      />
+                    </div>
+                    <div className="col-span-4">
+                      <button
+                        className="w-full px-3 py-2 mx-3 mt-4 text-white font-semibold bg-emerald-600 rounded-lg hover:bg-emerald-700 hover:text-white transition ease-linear duration-200 disabled:opacity-40 "
+                        type="submit"
+                        disabled={!url || loading || isOTPVefified}
+                      >
+                        {!isOTPVefified ? "Verify" : "Verified"}
+                      </button>
+                    </div>
+                  </div>
+                </form>
+                {isOTPVefified ? (
+                  <form onSubmit={(e) => handleChangePassword(e)}>
+                    <div className="my-1">
+                      <label
+                        htmlFor="password"
+                        className="block mb-2 text-sm font-medium text-gray-900 "
+                      >
+                        New Password
+                      </label>
+                      <input
+                        type="password"
+                        name="password"
+                        id="password"
+                        placeholder="••••••••"
+                        minLength={8}
+                        onChange={(e) => {
+                          setNewPassword(e.target.value);
+                          setErrPassword(checkPassword(newPassword));
+                        }}
+                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 disabled:bg-slate-200"
+                        disabled={!isOTPVefified || loading}
+                      />
+                    </div>
+                    <div className="my-1">
+                      <label
+                        htmlFor="confirm-password"
+                        className="block mb-2 text-sm font-medium text-gray-900 "
+                      >
+                        Confirm password
+                      </label>
+                      <input
+                        type="password"
+                        name="confirm-password"
+                        id="confirm-password"
+                        placeholder="••••••••"
+                        minLength={8}
+                        onChange={(e) => {
+                          setReNewPassword(e.target.value);
+                          setErrPassword(checkPassword(renewPassword));
+                          console.log(errPassword);
+                        }}
+                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 disabled:bg-slate-200"
+                        disabled={!isOTPVefified || loading}
+                      />
+                    </div>
+                    <div className="my-3 px-4">
+                      <ul className="text-sm text-red-700 list-disc">
+                        {newPassword !== renewPassword ? (
+                          <li>Password not match.</li>
+                        ) : (
+                          ""
+                        )}
+                        {!errPassword ? (
+                          <li>
+                            Minimum eight characters, at least one letter, one
+                            number and one special character (@,$,!,%,*,#,?,&)
+                          </li>
+                        ) : (
+                          ""
+                        )}
+                      </ul>
+                    </div>
+                    <button
+                      type="submit"
+                      className="w-full px-3 py-2 mt-4 text-white font-semibold bg-emerald-600 rounded-lg hover:bg-emerald-700 hover:text-white transition ease-linear duration-200 disabled:opacity-40 "
+                      disabled={
+                        !isOTPVefified ||
+                        loading ||
+                        newPassword !== renewPassword ||
+                        !errPassword
+                      }
+                    >
+                      Reset password
+                    </button>
+                  </form>
+                ) : (
+                  ""
+                )}
+              </div>
+            ) : (
+              ""
+            )}
           </div>
-        ) : null}
-        {page === 3 ? (
-          <div>
-            <ForgetForm
-              name="newPassword"
-              handleSubmit={handleChangePassword}
-              setValue={setNewPassword}
-              loading={loading}
-            />
-          </div>
-        ) : null}
+        </div>
       </div>
     </div>
   );

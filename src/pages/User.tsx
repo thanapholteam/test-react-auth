@@ -24,11 +24,12 @@ const User = () => {
 
   return (
     <div className="text-center">
-      <h1 className="text-lg font-bold">User Info</h1>
-      <p>{JSON.stringify(user)}</p>
+      <div className="w-full p-6 bg-white rounded-lg shadow border md:mt-0 sm:max-w-md sm:p-8">
+      <h1 className="text-lg font-bold">Welcome {user?.email || ''}</h1>
       <button onClick={logout} className="bg-blue-400 rounded-lg p-1">
         Logout
       </button>
+      </div>
     </div>
   );
 };
