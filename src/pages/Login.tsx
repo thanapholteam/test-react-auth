@@ -75,7 +75,7 @@ const Login = () => {
                 </div>
                 <div className="flex items-baseline justify-center my-1">
                   <button
-                    className="w-full py-2 mt-4 text-white font-semibold bg-emerald-600 rounded-lg hover:bg-black hover:text-white transition ease-linear duration-200"
+                    className="w-full py-2 mt-4 text-white font-semibold bg-emerald-600 rounded-lg hover:bg-emerald-700 hover:text-white transition ease-linear duration-200"
                     type="submit"
                   >
                     Login
