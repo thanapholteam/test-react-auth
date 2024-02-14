@@ -25,11 +25,9 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <div className="flex flex-col items-center justify-center">
-        <div className="flex-grow">
-          <div className="flex items-center justify-center">
-            <div className="px-12 py-6 mt-4 text-left bg-white rounded-xl border shadow-lg">
+    <div className="bg-[url('images/bg.jpeg')] bg-center bg-cover bg-repeat">
+      <div className="flex flex-col items-center justify-center backdrop-blur-md px-6 py-8 mx-auto md:h-screen lg:py-0">
+            <div className="w-full p-6 bg-white rounded-lg shadow border md:mt-0 sm:max-w-md sm:p-8">
               <h3 className="text-2xl font-bold mt-3">Sign in to your account</h3>
               <form onSubmit={(e) => handleLogin(e)}>
                 <div className="mt-4">
@@ -57,6 +55,7 @@ const Login = () => {
                         type="password"
                         name="password"
                         placeholder="••••••••"
+                        minLength={8}
                         onChange={(e) => {
                           onFormChange(e);
                         }}
@@ -96,8 +95,6 @@ const Login = () => {
             </div>
           </div>
         </div>
-      </div>
-    </div>
   );
 };
 

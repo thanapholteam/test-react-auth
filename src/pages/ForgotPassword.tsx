@@ -3,6 +3,7 @@ import { axiosInstance } from "@/utils/Axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { MySwal } from "@/utils/Swal";
+import { checkPassword, checkEmail } from "@/utils/validate";
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
@@ -16,18 +17,6 @@ const ForgotPassword = () => {
   const [errEmail, setErrEmail] = useState(true);
   const [errPassword, setErrPassword] = useState(true);
   // const [errOtp, setErrOtp] = useState(true);
-
-  const checkPassword = (value: string) => {
-    const regEx =
-      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
-    return regEx.test(value);
-  };
-
-  const checkEmail = () => {
-    const regEx =
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return regEx.test(email);
-  };
 
   // const checkOtp = () => {
   //   const regEx = new RegExp("^[0-9]+$");
@@ -51,7 +40,6 @@ const ForgotPassword = () => {
         });
       }
       // For other status code like 400, 404, 500
-      setLoading(false);
     }
     setLoading(false);
   };
@@ -77,7 +65,6 @@ const ForgotPassword = () => {
           timer: 2000,
         });
       }
-      setLoading(false);
     }
     setLoading(false);
   };
@@ -104,14 +91,13 @@ const ForgotPassword = () => {
           timer: 2000,
         }).then(() => navigate("/login"));
       }
-      setLoading(false);
     }
     setLoading(false);
   };
 
   return (
-    <div>
-      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+    <div className="bg-[url('images/bg.jpeg')] bg-center bg-cover bg-repeat">
+    <div className="flex flex-col items-center justify-center backdrop-blur-md px-6 py-8 mx-auto md:h-screen lg:py-0">
         <div className="w-full p-6 bg-white rounded-lg shadow border md:mt-0 sm:max-w-md sm:p-8">
           <h2 className="mb-1 text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
             Forgot Password
@@ -132,7 +118,7 @@ const ForgotPassword = () => {
                     id="email"
                     onChange={(e) => {
                       setEmail(e.target.value);
-                      setErrEmail(checkEmail());
+                      setErrEmail(checkEmail(e.target.value));
                     }}
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 disabled:bg-slate-200"
                     placeholder="test@mail.com"
@@ -232,7 +218,6 @@ const ForgotPassword = () => {
                         onChange={(e) => {
                           setReNewPassword(e.target.value);
                           setErrPassword(checkPassword(renewPassword));
-                          console.log(errPassword);
                         }}
                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 disabled:bg-slate-200"
                         disabled={!isOTPVefified || loading}
