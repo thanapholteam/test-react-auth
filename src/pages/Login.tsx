@@ -25,10 +25,8 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <div className="flex flex-col items-center justify-start mt-4 px-6 py-8 mx-auto md:h-screen lg:py-0">
-        <div className="flex-grow">
-          <div className="flex items-center justify-center">
+    <div className="">
+      <div className="flex flex-col items-center justify-center mt-4 px-6 py-8 mx-auto md:h-screen lg:py-0">
             <div className="w-full p-6 bg-white rounded-lg shadow border md:mt-0 sm:max-w-md sm:p-8">
               <h3 className="text-2xl font-bold mt-3">Sign in to your account</h3>
               <form onSubmit={(e) => handleLogin(e)}>
@@ -97,8 +95,6 @@ const Login = () => {
             </div>
           </div>
         </div>
-      </div>
-    </div>
   );
 };
 
