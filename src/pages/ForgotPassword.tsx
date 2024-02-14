@@ -97,7 +97,7 @@ const ForgotPassword = () => {
 
   return (
     <div>
-      <div className="flex flex-col items-center justify-center mt-4 px-6 py-8 mx-auto md:h-screen lg:py-0">
+      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
         <div className="w-full p-6 bg-white rounded-lg shadow border md:mt-0 sm:max-w-md sm:p-8">
           <h2 className="mb-1 text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
             Forgot Password
@@ -118,7 +118,7 @@ const ForgotPassword = () => {
                     id="email"
                     onChange={(e) => {
                       setEmail(e.target.value);
-                      setErrEmail(checkEmail(email));
+                      setErrEmail(checkEmail(e.target.value));
                     }}
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 disabled:bg-slate-200"
                     placeholder="test@mail.com"
